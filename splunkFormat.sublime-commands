@@ -1,0 +1,4 @@
+[
+  { "command": "splunk_format", "caption": "Splunk Format: Format selection", "args": {"area_to_format": "selection"}},
+  { "command": "splunk_format", "caption": "Splunk Format: Format page", "args": {"area_to_format": "view"}}
+]
