@@ -53,10 +53,15 @@ class SplunkFormatCommand(sublime_plugin.TextCommand):
 					moarSubSearchs = formatSubSearches(moarSubSearchs, level=level + 1)
 					for y in moarSubSearchs:
 						x = x.replace("SUBSEARCHFTW%s" % level, y, 1)
-				x = re.sub(r"^(\s+?)?\[", r"[\n" + " " * level * 4, x)
-				x = re.sub(r"(?:\s+?)?\|", r"\n" + " " * level * 4 + "|", x)
+				x = re.sub(r"^\s*\[[\s\n]*", r"[\n" + " " * level * 4, x)
+				x = re.sub(r"(?<!E)(?:\s+?)?\|", r"\n" + " " * level * 4 + "|", x)
 				x = re.sub(r"(\s+)?\]$", r" ]", x)
+				if level > 1:
+					x = re.sub(r"    \n*", "SPCE", x)
 				r.append(x)
+			if level == 1:
+				for i, x in enumerate(r):
+					r[i] = re.sub(r"SPCE", "    ", x)
 			return r
 
 		subsearches = findSubsearches(workingString)
